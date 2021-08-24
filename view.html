@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Conversion</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="./src/process.js"></script>
+    <script>
+        let MyTemperatureConversionObj=new MyTemperatureConversion();
+        let from="C";
+        let to="C";
+        let temperature=null;
+        function fromChange(e){
+            from=e.value;
+            document.getElementById("origin_unit_text").innerHTML="&deg;"+from;
+            let res=MyTemperatureConversionObj.temperatureConversion(from, to, temperature);
+            if(res.ret){
+                document.getElementById("toValue").value=res.temperature;
+            }
+            else{
+                console.log(res);
+            }
+        }
+
+        function toChange(e){
+            to=e.value;
+            document.getElementById("destination_unit_text").innerHTML="&deg;"+to;
+            let res=MyTemperatureConversionObj.temperatureConversion(from, to, temperature);
+            if(res.ret){
+                document.getElementById("toValue").value=res.temperature;
+            }
+            else{
+                console.log(res);
+            }
+        }
+
+        function temperatureChange(e){
+            if(!isNaN(e.value)){
+                temperature=parseFloat(e.value, null);
+                let res=MyTemperatureConversionObj.temperatureConversion(from, to, temperature);
+                if(res.ret){
+                    document.getElementById("toValue").value=res.temperature;
+                }
+                else{
+                    console.log(res);
+                }
+            }
+        }
+
+        function bgChange(e){
+            document.body.style.backgroundColor = e.value;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h1 class="text-center">TEMPERATURE CONVERSION</h1>
+                <div class="input-box">
+                    <select name="from" id="from" class="my-form-select" title="origin unit" onchange="fromChange(this)">
+                        <option value="C">Celcius</option>
+                        <option value="K">Kelvin</option>
+                        <option value="F">Farenheit</option>
+                        <option value="R">Reamur</option>
+                    </select>
+                    <select name="to" id="to" class="my-form-select" title="destination unit" onchange="toChange(this)">
+                        <option value="C">Celcius</option>
+                        <option value="K">Kelvin</option>
+                        <option value="F">Farenheit</option>
+                        <option value="R">Reamur</option>
+                    </select>
+            
+                    <div class="my-input-group">
+                        <input type="number" name="fromValue" id="fromValue" class="my-form-control" onkeyup="temperatureChange(this)" placeholder="Temperature"/>
+                        <span class="my-input-group-text" id="origin_unit_text">&deg;C</span>
+                    </div>
+                    <p>To</p>
+                    <div class="my-input-group">
+                        <input type="number" name="toValue" id="toValue" class="my-form-control" readonly placeholder="Result"/>
+                        <span class="my-input-group-text" id="destination_unit_text">&deg;C</span>
+                    </div>
+                    <p>Setting</p>
+                    <div class="my-input-group">
+                        <span class="my-input-group-text">Hex</span>
+                        <input type="text" name="bgInput" id="bgInput" class="my-form-control" onkeyup="bgChange(this)" placeholder="Background Color (eg. #000)">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+</body>
+</html>
